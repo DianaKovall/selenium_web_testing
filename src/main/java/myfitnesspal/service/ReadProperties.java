@@ -1,4 +1,4 @@
-package service;
+package myfitnesspal.service;
 
 import java.util.ResourceBundle;
 

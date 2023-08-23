@@ -1,14 +1,15 @@
-package pages;
+package myfitnesspal.pages;
 
+import myfitnesspal.pages.menus.mainMenu.MyHomePage;
+import myfitnesspal.service.ReadProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import service.ReadProperties;
 
 import java.time.Duration;
 
-import static service.IConstantsUtils.FIFTY_TIMEOUT;
+import static myfitnesspal.service.utils.IConstantsUtils.FIFTY_TIMEOUT;
 
 
 public class LoginPage {
@@ -27,9 +28,9 @@ public class LoginPage {
     }
 
 
-    public HomePage clickOnLoginButton() {
+    public MyHomePage clickOnLoginButton() {
         driver.findElement(loginButton).click();
-        return new HomePage(driver);
+        return new MyHomePage(driver);
 
     }
 
