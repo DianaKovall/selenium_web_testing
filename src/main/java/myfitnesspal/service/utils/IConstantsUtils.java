@@ -10,4 +10,6 @@ public interface IConstantsUtils {
     int TWENTY_TIMEOUTS = 20;
 
     int FORTY_TIMEOUTS = 40;
+
+    String PASSWORD_CONFIRM = "Password Sent";
 }

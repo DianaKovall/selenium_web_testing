@@ -8,13 +8,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
-import static myfitnesspal.service.utils.IConstantsUtils.FIFTY_TIMEOUT;
-
+import static myfitnesspal.service.utils.IConstantsUtils.*;
 
 public class LoginPage {
 
     private final WebDriver driver;
+
 
     private final By emailField = new By.ByXPath("//*[@id=\"email\"]");
 
@@ -22,16 +23,42 @@ public class LoginPage {
 
     private final By loginButton = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[2]/button[1]");
 
+    private final By forgetPasswordLink = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[1]/p/a");
+
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
 
+    public ForgetPasswordPage clickOnForgetPasswordButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(FIFTY_TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(forgetPasswordLink));
+        driver.findElement(forgetPasswordLink).click();
+        return new ForgetPasswordPage(driver);
+
+    }
+
+    private final By captchaMessage = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[1]/div[text()=\"Unable to sign in. Recaptcha verification failed. Please try again.\"]");
+
+    private final By loginButtonCaptcha = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[3]/button[1]");
+
+    public void reCaptchaIfPresent() {
+        int attemp = 3;
+        while (driver.findElement(loginButtonCaptcha).isEnabled() &&
+                driver.findElement(captchaMessage).isDisplayed() &&
+                attemp > 0) {
+            attemp--;
+            driver.findElement(loginButtonCaptcha).click();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        }
+    }
+
     public MyHomePage clickOnLoginButton() {
         driver.findElement(loginButton).click();
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        reCaptchaIfPresent();
         return new MyHomePage(driver);
-
     }
 
 

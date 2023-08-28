@@ -30,7 +30,6 @@ public class MainMenuModal {
         WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(dynamicXPath)));
         element.click();
 
-
         SubMenuModal subMenuModal = new SubMenuModal(driver);
        return subMenuModal.openPageFromSubMenu(foodDiaryMenu);
     }

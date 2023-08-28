@@ -1,5 +1,6 @@
 package myfitnesspal.base;
 
+import myfitnesspal.pages.LoginPage;
 import myfitnesspal.service.utils.IConstantsUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,12 +20,16 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 
 
-
 public class BaseTests implements IConstantsUtils {
 
     Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected WebDriver driver;
     protected WelcomePage welcomePage;
+
+
+    private final By captchaMessage = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[1]/div[text()=\"Unable to sign in. Recaptcha verification failed. Please try again.\"]");
+
+    //  private final By loginButton = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[2]/button[1]");
 
 
     @BeforeMethod
@@ -39,7 +44,7 @@ public class BaseTests implements IConstantsUtils {
         welcomePage = new WelcomePage(driver);
     }
 
-    public void closeCookiesPopUp(){
+    public void closeCookiesPopUp() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(FORTY_TIMEOUTS));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("sp_message_iframe_760094")));
         WebElement iframe = driver.findElement(By.id("sp_message_iframe_760094"));
@@ -47,9 +52,23 @@ public class BaseTests implements IConstantsUtils {
         driver.findElement(By.xpath("//*[@id=\"notice\"]/div[3]/button")).click();
     }
 
+    private final By loginButton = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[3]/button[1]");
 
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
+    public void reCaptchaIfPresent() {
+        int attemp = 3;
+        while (driver.findElement(loginButton).isEnabled() &&
+                driver.findElement(captchaMessage).isDisplayed() &&
+                attemp > 0) {
+            attemp--;
+            driver.findElement(loginButton).click();
+        }
+
+
     }
+
+//
+//    @AfterMethod
+//    public void tearDown() {
+//        driver.quit();
+//    }
 }

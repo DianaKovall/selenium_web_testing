@@ -1,5 +1,6 @@
 package myfitnesspal;
 
+import myfitnesspal.pages.ForgetPasswordPage;
 import myfitnesspal.pages.menus.mainMenu.foodDiaryMenu.MyFoodsPage;
 import myfitnesspal.pages.modals.MainMenuModal;
 import myfitnesspal.service.enums.FoodDiaryMenu;
@@ -24,7 +25,7 @@ public class MyFitnessPalTests extends BaseTests {
     }
 
     @Test
-    public void searchTest(){
+    public void searchTest() {
         LoginPage loginPage = welcomePage.clickOnLoginButton();
         loginPage.enterValidCredentials();
         MyHomePage myHomePage = loginPage.clickOnLoginButton();
@@ -35,6 +36,17 @@ public class MyFitnessPalTests extends BaseTests {
             Assert.assertTrue(myFoodsPage.isSearchedResultsAsExpected(FOOD_FOR_SEARCH),
                     "[ MY FOODS PAGE] Searched results are not as expected!");
         }
+
+    }
+
+
+    @Test
+    public void forgetPasswordTest() {
+        LoginPage loginPage = welcomePage.clickOnLoginButton();
+        ForgetPasswordPage forgetPasswordPage = loginPage.clickOnForgetPasswordButton();
+        forgetPasswordPage.submitEmail();
+        Assert.assertTrue(forgetPasswordPage.isConfirmMessageDisplayed(),
+                "[ FORGET PASSWORD PAGE ] Password confirm message was not displayed!");
 
     }
 
