@@ -50,13 +50,13 @@ public class LoginPage {
                 attemp > 0) {
             attemp--;
             driver.findElement(loginButtonCaptcha).click();
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(TEN_TIMEOUT, TimeUnit.SECONDS);
         }
     }
 
     public MyHomePage clickOnLoginButton() {
         driver.findElement(loginButton).click();
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(FIFTEEN_TIMEOUT, TimeUnit.SECONDS);
         reCaptchaIfPresent();
         return new MyHomePage(driver);
     }
