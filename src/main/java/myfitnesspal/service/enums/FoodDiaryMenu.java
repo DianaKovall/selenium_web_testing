@@ -29,7 +29,7 @@ public enum FoodDiaryMenu {
 
 
     public String getMainMenuPage() {
-        return FOOD_DIARY.getPageName();
+        return MainMenu.FOOD_DIARY.getPageName();
     }
 
 }

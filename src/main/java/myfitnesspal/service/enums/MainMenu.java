@@ -1,6 +1,7 @@
 package myfitnesspal.service.enums;
 
 import myfitnesspal.pages.menus.mainMenu.*;
+import myfitnesspal.pages.menus.mainMenu.appGalleryMenu.AppGalleryPage;
 import myfitnesspal.pages.menus.mainMenu.foodDiaryMenu.FoodDiaryPage;
 
 public enum MainMenu {
@@ -9,7 +10,7 @@ public enum MainMenu {
     FOOD_DIARY("Food", FoodDiaryPage.class),
     EXERCISE("Exercise", ExercisePage.class),
     REPORTS("Reports", ReportsPage.class),
-    APPS("Apps", AppsPage.class),
+    APPS("Apps", AppGalleryPage.class),
     COMMUNITY("Community", CommunityPage.class),
     BLOG("Blog", BlogPage.class),
     PREMIUM("Premium", PremiumPage.class);

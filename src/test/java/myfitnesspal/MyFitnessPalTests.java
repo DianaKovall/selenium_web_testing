@@ -1,8 +1,12 @@
 package myfitnesspal;
 
 import myfitnesspal.pages.ForgetPasswordPage;
+import myfitnesspal.pages.menus.mainMenu.MyAbstractPage;
+import myfitnesspal.pages.menus.mainMenu.appGalleryMenu.AppGalleryPage;
 import myfitnesspal.pages.menus.mainMenu.foodDiaryMenu.MyFoodsPage;
 import myfitnesspal.pages.modals.MainMenuModal;
+import myfitnesspal.service.enums.AppGalleryMenu;
+import myfitnesspal.service.enums.AppsCategories;
 import myfitnesspal.service.enums.FoodDiaryMenu;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,10 +15,13 @@ import myfitnesspal.base.BaseTests;
 import myfitnesspal.pages.menus.mainMenu.MyHomePage;
 import myfitnesspal.pages.LoginPage;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class MyFitnessPalTests extends BaseTests {
 
 
     public final String FOOD_FOR_SEARCH = "Bread";
+    public final AppsCategories CATEGORY = AppsCategories.FERTILITY;
 
     @Test
     public void loginTest() {
@@ -25,7 +32,7 @@ public class MyFitnessPalTests extends BaseTests {
     }
 
     @Test
-    public void searchTest() {
+    public void searchTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         LoginPage loginPage = welcomePage.clickOnLoginButton();
         loginPage.enterValidCredentials();
         MyHomePage myHomePage = loginPage.clickOnLoginButton();
@@ -50,4 +57,18 @@ public class MyFitnessPalTests extends BaseTests {
 
     }
 
+
+    @Test
+    public void sortProductTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        LoginPage loginPage = welcomePage.clickOnLoginButton();
+        loginPage.enterValidCredentials();
+        MyHomePage myHomePage = loginPage.clickOnLoginButton();
+        if (myHomePage.isHomePageOpened()) {
+            MainMenuModal mainMenuModal = new MainMenuModal(driver);
+            AppGalleryPage appGalleryPage = (AppGalleryPage) mainMenuModal.openPageFromMainMenu(AppGalleryMenu.APP_GALLERY_MENU_MENU);
+            appGalleryPage.chooseCategory(CATEGORY);
+            Assert.assertTrue(appGalleryPage.areItemsSortedByCategory(CATEGORY),
+                    String.format("[ APP GALLERY ] Items are not sorted as expected! Category:'%s'", CATEGORY.getCategoryName()));
+        }
+    }
 }

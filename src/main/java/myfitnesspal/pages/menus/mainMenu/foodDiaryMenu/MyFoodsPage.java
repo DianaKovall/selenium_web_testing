@@ -1,5 +1,6 @@
 package myfitnesspal.pages.menus.mainMenu.foodDiaryMenu;
 
+import myfitnesspal.pages.menus.mainMenu.MyAbstractPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +9,7 @@ import org.openqa.selenium.devtools.v109.page.Page;
 
 import java.util.List;
 
-public class MyFoodsPage extends Page {
+public class MyFoodsPage extends MyAbstractPage {
 
     private final WebDriver webDriver;
 

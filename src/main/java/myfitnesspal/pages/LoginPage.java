@@ -44,19 +44,21 @@ public class LoginPage {
     private final By loginButtonCaptcha = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[3]/button[1]");
 
     public void reCaptchaIfPresent() {
-        int attemp = 3;
-        while (driver.findElement(loginButtonCaptcha).isEnabled() &&
-                driver.findElement(captchaMessage).isDisplayed() &&
-                attemp > 0) {
-            attemp--;
-            driver.findElement(loginButtonCaptcha).click();
-            driver.manage().timeouts().implicitlyWait(TEN_TIMEOUT, TimeUnit.SECONDS);
+        MyHomePage myHomePage = new MyHomePage(driver);
+        if(!myHomePage.isHomePageOpened()) {
+            int attemp = 3;
+            while (driver.findElement(loginButtonCaptcha).isEnabled() &&
+                    driver.findElement(captchaMessage).isDisplayed() &&
+                    attemp > 0) {
+                attemp--;
+                driver.findElement(loginButtonCaptcha).click();
+                driver.manage().timeouts().implicitlyWait(TEN_TIMEOUT, TimeUnit.SECONDS);
+            }
         }
     }
 
     public MyHomePage clickOnLoginButton() {
         driver.findElement(loginButton).click();
-        driver.manage().timeouts().implicitlyWait(FIFTEEN_TIMEOUT, TimeUnit.SECONDS);
         reCaptchaIfPresent();
         return new MyHomePage(driver);
     }
