@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.AssertJUnit;
 import org.testng.annotations.*;
@@ -57,7 +58,10 @@ public class OpenCartTests {
 
         if(!Objects.equals(browser, "") && browser != null) {
             if(browser.equalsIgnoreCase("Chrome")) {
-                driver = new ChromeDriver();
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--remote-allow-origins=*");
+                driver = new ChromeDriver(chromeOptions);
                 driver.manage().window().maximize();
             }
             else if(browser.equalsIgnoreCase("firefox")) {
@@ -67,13 +71,19 @@ public class OpenCartTests {
             else {
                 System.out.println("Invalid option Selected hence defaulting to Chrome");
                 browser = "Chrome";
-                driver = new ChromeDriver();
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--remote-allow-origins=*");
+                driver = new ChromeDriver(chromeOptions);
                 driver.manage().window().maximize();
             }
         }
         else {
             browser = "Chrome";
-            driver = new ChromeDriver();
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--remote-allow-origins=*");
+            driver = new ChromeDriver(chromeOptions);
             driver.manage().window().maximize();
         }
     }

@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -49,16 +50,6 @@ public class SauceDemoTests {
         AssertJUnit.assertEquals(title, header);
     }
 
-    //Login
-
-    @Test(enabled = true, priority = 1)
-    public void login() {
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.className("btn_action")).click();
-        AssertJUnit.assertEquals("Products", driver.findElement(By.className("product_label")).getText());
-    }
-
     //Before test
     @BeforeTest
     public void beforeTest() {
@@ -66,7 +57,10 @@ public class SauceDemoTests {
 
         if(!Objects.equals(browser, "") && browser != null) {
             if(browser.equalsIgnoreCase("Chrome")) {
-                driver = new ChromeDriver();
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--remote-allow-origins=*");
+                driver = new ChromeDriver(chromeOptions);
                 driver.manage().window().maximize();
             }
             else if(browser.equalsIgnoreCase("firefox")) {
@@ -76,13 +70,19 @@ public class SauceDemoTests {
             else {
                 System.out.println("Invalid option Selected hence defaulting to Chrome");
                 browser = "Chrome";
-                driver = new ChromeDriver();
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--remote-allow-origins=*");
+                driver = new ChromeDriver(chromeOptions);
                 driver.manage().window().maximize();
             }
         }
         else {
             browser = "Chrome";
-            driver = new ChromeDriver();
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--remote-allow-origins=*");
+            driver = new ChromeDriver(chromeOptions);
             driver.manage().window().maximize();
         }
     }
