@@ -1,7 +1,6 @@
 package myfitnesspal;
 
 import myfitnesspal.pages.ForgetPasswordPage;
-import myfitnesspal.pages.menus.mainMenu.MyAbstractPage;
 import myfitnesspal.pages.menus.mainMenu.appGalleryMenu.AppGalleryPage;
 import myfitnesspal.pages.menus.mainMenu.foodDiaryMenu.MyFoodsPage;
 import myfitnesspal.pages.modals.MainMenuModal;

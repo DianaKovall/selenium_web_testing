@@ -31,6 +31,11 @@ public class LoginPage {
     }
 
 
+    public boolean isLoginPageOpen() {
+        return driver.findElement(emailField).isDisplayed() && driver.findElement(passwordField).isDisplayed();
+
+    }
+
     public ForgetPasswordPage clickOnForgetPasswordButton() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(FIFTY_TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(forgetPasswordLink));
@@ -44,8 +49,7 @@ public class LoginPage {
     private final By loginButtonCaptcha = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[3]/button[1]");
 
     public void reCaptchaIfPresent() {
-        MyHomePage myHomePage = new MyHomePage(driver);
-        if(!myHomePage.isHomePageOpened()) {
+        if(isLoginPageOpen()) {
             int attemp = 3;
             while (driver.findElement(loginButtonCaptcha).isEnabled() &&
                     driver.findElement(captchaMessage).isDisplayed() &&
@@ -59,6 +63,7 @@ public class LoginPage {
 
     public MyHomePage clickOnLoginButton() {
         driver.findElement(loginButton).click();
+        driver.manage().timeouts().implicitlyWait(FIFTEEN_TIMEOUT, TimeUnit.SECONDS);
         reCaptchaIfPresent();
         return new MyHomePage(driver);
     }
