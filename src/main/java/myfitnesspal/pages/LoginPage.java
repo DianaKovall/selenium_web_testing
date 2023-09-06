@@ -49,21 +49,40 @@ public class LoginPage {
     private final By loginButtonCaptcha = new By.ByXPath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[3]/button[1]");
 
     public void reCaptchaIfPresent() {
-        if(isLoginPageOpen()) {
-            int attemp = 3;
-            while (driver.findElement(loginButtonCaptcha).isEnabled() &&
-                    driver.findElement(captchaMessage).isDisplayed() &&
-                    attemp > 0) {
+        int attemp = 3;
+
+        while (isLoginPageOpen()) {
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(FIFTEEN_TIMEOUT));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[3]/button[1]")));
+
+            if (attemp > 0 && driver.findElement(loginButtonCaptcha).isEnabled() &&
+                    driver.findElement(captchaMessage).isDisplayed() ) {
                 attemp--;
                 driver.findElement(loginButtonCaptcha).click();
-                driver.manage().timeouts().implicitlyWait(FIFTEEN_TIMEOUT, TimeUnit.SECONDS);
+                // driver.manage().timeouts().implicitlyWait(FIFTEEN_TIMEOUT, TimeUnit.SECONDS);
             }
         }
+
+//        if (isLoginPageOpen()) {
+//
+//            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(FIFTEEN_TIMEOUT));
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"__next\"]/div/main/div/div/form/div/div[3]/button[1]")));
+//
+//            int attemp = 3;
+//            while (driver.findElement(loginButtonCaptcha).isEnabled() &&
+//                    driver.findElement(captchaMessage).isDisplayed() &&
+//                    attemp > 0) {
+//                attemp--;
+//                driver.findElement(loginButtonCaptcha).click();
+//                driver.manage().timeouts().implicitlyWait(FIFTEEN_TIMEOUT, TimeUnit.SECONDS);
+//            }
+//        }
     }
 
     public MyHomePage clickOnLoginButton() {
         driver.findElement(loginButton).click();
-        driver.manage().timeouts().implicitlyWait(FIFTEEN_TIMEOUT, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(FIFTEEN_TIMEOUT, TimeUnit.SECONDS);
         reCaptchaIfPresent();
         return new MyHomePage(driver);
     }
